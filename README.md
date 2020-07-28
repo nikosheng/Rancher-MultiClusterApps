@@ -37,7 +37,7 @@ eksctl create cluster --name=eks-ohio --nodes-min=1 --nodes-max=2 --version 1.16
 
 ### 注册`EKS`集群
 
-等待步骤2中的集群都创建完毕后，我们可以在Rancher界面中分别注册上面的EKS集群。
+等待步骤2中的集群都创建完毕后，我们可以在`Rancher`界面中分别注册上面的EKS集群。
 
 ```
 [ec2-user@ip-192-168-35-59 ~]$ curl --insecure -sfL https://13.229.95.214/v3/import/j89cflmxzkjctbc5dxp7fsfshvdxbpt6lwp9x46klk8zdg975pp4hs.yaml | kubectl apply -f -
@@ -54,9 +54,9 @@ daemonset.apps/cattle-node-agent created
 
 ### 开发`Helm`微服务示例程序
 
-本次实验当中我们使用Helm进行微服务应用程序的开发，如果我们自己没有Helm Charts, 可以使用测试的[Helm Charts](https://github.com/nikosheng/charts-repo/tree/master/charts/eksdemo) 来进行后续的实验
+本次实验当中我们使用`Helm`进行微服务应用程序的开发，如果我们自己没有`Helm Charts`, 可以使用测试的[Helm Charts](https://github.com/nikosheng/charts-repo/tree/master/charts/eksdemo) 来进行后续的实验
 
-具体的Helm应用程序的开发和部署，我们可以参考[EKS Workshop](https://www.eksworkshop.com/beginner/060_helm/)
+具体的`Helm`应用程序的开发和部署，我们可以参考[EKS Workshop](https://www.eksworkshop.com/beginner/060_helm/)
 
 ### 部署`Rancher Multi Cluster Apps`
 
@@ -69,16 +69,19 @@ daemonset.apps/cattle-node-agent created
 	- `Branch`: `master`
 	- `Scope`: `global`
 	- `Helm Version`: `Helm v3`
+		![private-catalog](https://github.com/nikosheng/Rancher-MultiClusterApps/blob/master/imgs/private-catalog.png)
 	- 创建成功后等待状态更改为`Active`
-- 创建私有的Catalog后，我们可以回到Apps界面，然后点击Launch选择我们需要部署的程序
-- 进入界面后，可以看到我们刚才添加的catalog栏目，同时里面已经有搜索出我们在catalog中上传的helm应用程序。点击应用程序进入配置页。
+- 创建私有的`Catalog`后，我们可以回到`Apps`界面，然后点击`Launch`选择我们需要部署的程序
+	![private-repo](https://github.com/nikosheng/Rancher-MultiClusterApps/blob/master/imgs/private-repo.png)
+- 进入界面后，可以看到我们刚才添加的`catalog`栏目，同时里面已经有搜索出我们在`catalog`中上传的`helm`应用程序。点击应用程序进入配置页。
 - 在配置页中填入对应的信息
 	- `Name`
-	- `Target Projects`: 分别选择两个EKS集群中的Namespace，默认可以选择Default，这样程序会部署在Default Namespace中
+	- `Target Projects`: 分别选择两个`EKS`集群中的`Namespace`，默认可以选择`Default`，这样程序会部署在`Default Namespace`中
 	- 其他选项保持默认
-	- 点击Launch启动程序的部署
-- 这时候可以看到helm程序会正在部署的页面，等待一段时间后可以看到程序变为Active的界面。
-- 此时我们可以分别进入到两个EKS集群查看程序的部署情况
+	- 点击`Launch`启动程序的部署
+- 这时候可以看到`helm`程序会正在部署的页面，等待一段时间后可以看到程序变为`Active`的界面。
+	![Deployment-Success](https://github.com/nikosheng/Rancher-MultiClusterApps/blob/master/imgs/deploy-success.png)
+- 此时我们可以分别进入到两个`EKS`集群查看程序的部署情况
 
 	```
 	[ec2-user@ip-192-168-35-59 ~]$ kubectl get po,svc,deploy
