@@ -75,8 +75,9 @@ daemonset.apps/cattle-node-agent created
 	![private-repo](https://github.com/nikosheng/Rancher-MultiClusterApps/blob/master/imgs/private-repo.png)
 - 进入界面后，可以看到我们刚才添加的`catalog`栏目，同时里面已经有搜索出我们在`catalog`中上传的`helm`应用程序。点击应用程序进入配置页。
 - 在配置页中填入对应的信息
-	- `Name`
+	- `Name`: eksdemo
 	- `Target Projects`: 分别选择两个`EKS`集群中的`Namespace`，默认可以选择`Default`，这样程序会部署在`Default Namespace`中
+	- `Available Roles`: Cluster
 	- 其他选项保持默认
 	- 点击`Launch`启动程序的部署
 - 这时候可以看到`helm`程序会正在部署的页面，等待一段时间后可以看到程序变为`Active`的界面。
@@ -84,44 +85,46 @@ daemonset.apps/cattle-node-agent created
 - 此时我们可以分别进入到两个`EKS`集群查看程序的部署情况
 
 	```
-	[ec2-user@ip-192-168-35-59 ~]$ kubectl get po,svc,deploy
+		> kubectl get po,deploy,svc
 	NAME                                    READY   STATUS    RESTARTS   AGE
-	pod/ecsdemo-crystal-f675bddbd-77xd2     1/1     Running   0          30s
-	pod/ecsdemo-crystal-f675bddbd-fg66r     1/1     Running   0          30s
-	pod/ecsdemo-crystal-f675bddbd-flph5     1/1     Running   0          30s
-	pod/ecsdemo-frontend-5c8d795d5c-hvd4p   1/1     Running   0          30s
-	pod/ecsdemo-frontend-5c8d795d5c-qnbv8   1/1     Running   0          30s
-	pod/ecsdemo-frontend-5c8d795d5c-sdvkl   1/1     Running   0          30s
-	pod/ecsdemo-nodejs-6b568585fc-57cwk     1/1     Running   0          30s
-	pod/ecsdemo-nodejs-6b568585fc-85hfd     1/1     Running   0          30s
-	pod/ecsdemo-nodejs-6b568585fc-tdff7     1/1     Running   0          30s
-	
-	NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-	service/kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   7h11m
-	
+	pod/ecsdemo-crystal-6cfd7ff6c-2trrp     1/1     Running   0          23s
+	pod/ecsdemo-crystal-6cfd7ff6c-snlgc     1/1     Running   0          23s
+	pod/ecsdemo-crystal-6cfd7ff6c-zlpqg     1/1     Running   0          23s
+	pod/ecsdemo-frontend-5987fdbc5b-6k7qj   1/1     Running   0          23s
+	pod/ecsdemo-frontend-5987fdbc5b-j7j2s   1/1     Running   0          23s
+	pod/ecsdemo-frontend-5987fdbc5b-snn5h   1/1     Running   0          23s
+	pod/ecsdemo-nodejs-6d5884456b-7z25t     1/1     Running   0          23s
+	pod/ecsdemo-nodejs-6d5884456b-bgc72     1/1     Running   0          23s
+	pod/ecsdemo-nodejs-6d5884456b-hzp4t     1/1     Running   0          23s
+
 	NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-	deployment.apps/ecsdemo-crystal    3/3     3            3           30s
-	deployment.apps/ecsdemo-frontend   3/3     3            3           30s
-	deployment.apps/ecsdemo-nodejs     3/3     3            3           30s
-	[ec2-user@ip-192-168-35-59 ~]$ kubectl get po,svc,deploy
+	deployment.apps/ecsdemo-crystal    3/3     3            3           23s
+	deployment.apps/ecsdemo-frontend   3/3     3            3           23s
+	deployment.apps/ecsdemo-nodejs     3/3     3            3           23s
+
+	NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+	service/kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   14d
+	> kubectl get po,deploy,svc
 	NAME                                    READY   STATUS    RESTARTS   AGE
-	pod/ecsdemo-crystal-f675bddbd-77xd2     1/1     Running   0          31m
-	pod/ecsdemo-crystal-f675bddbd-fg66r     1/1     Running   0          31m
-	pod/ecsdemo-crystal-f675bddbd-flph5     1/1     Running   0          31m
-	pod/ecsdemo-frontend-5c8d795d5c-hvd4p   1/1     Running   0          31m
-	pod/ecsdemo-frontend-5c8d795d5c-qnbv8   1/1     Running   0          31m
-	pod/ecsdemo-frontend-5c8d795d5c-sdvkl   1/1     Running   0          31m
-	pod/ecsdemo-nodejs-6b568585fc-57cwk     1/1     Running   0          31m
-	pod/ecsdemo-nodejs-6b568585fc-85hfd     1/1     Running   0          31m
-	pod/ecsdemo-nodejs-6b568585fc-tdff7     1/1     Running   0          31m
-	
-	NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-	service/kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   7h43m
-	
+	pod/ecsdemo-crystal-6cfd7ff6c-2bbzm     1/1     Running   0          64s
+	pod/ecsdemo-crystal-6cfd7ff6c-h599w     1/1     Running   0          64s
+	pod/ecsdemo-crystal-6cfd7ff6c-xn5f6     1/1     Running   0          64s
+	pod/ecsdemo-frontend-5987fdbc5b-5sjqb   1/1     Running   0          64s
+	pod/ecsdemo-frontend-5987fdbc5b-kxs4c   1/1     Running   0          64s
+	pod/ecsdemo-frontend-5987fdbc5b-vxm5n   1/1     Running   0          64s
+	pod/ecsdemo-nodejs-6d5884456b-j4crr     1/1     Running   0          64s
+	pod/ecsdemo-nodejs-6d5884456b-ks5b7     1/1     Running   0          64s
+	pod/ecsdemo-nodejs-6d5884456b-wr5dh     1/1     Running   0          64s
+
 	NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-	deployment.apps/ecsdemo-crystal    3/3     3            3           31m
-	deployment.apps/ecsdemo-frontend   3/3     3            3           31m
-	deployment.apps/ecsdemo-nodejs     3/3     3            3           31m
+	deployment.apps/ecsdemo-crystal    3/3     3            3           65s
+	deployment.apps/ecsdemo-frontend   3/3     3            3           65s
+	deployment.apps/ecsdemo-nodejs     3/3     3            3           65s
+
+	NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)        AGE
+	service/ecsdemo-crystal    ClusterIP      10.100.245.95   <none>                                                                    80/TCP         66s
+	service/ecsdemo-frontend   LoadBalancer   10.100.95.234   ae0c497115fbe42b68477d6010317a52-1349761618.us-east-1.elb.amazonaws.com   80:31412/TCP   66s
+	service/ecsdemo-nodejs     ClusterIP      10.100.156.43   <none>                                                                    80/TCP         66s
 	```
  
 	可以看到两个集群中微服务程序都已经可以成功部署并运行起来
